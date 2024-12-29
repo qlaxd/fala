@@ -6,9 +6,8 @@ A Fala Farm hivatalos weboldala, amely Next.js-ben készült, többnyelvű támo
 
 ## Rendszerkövetelmények
 
-- Node.js (v18.0.0 vagy újabb)
-- npm (v9.0.0 vagy újabb)
-- Git
+- Node.js (v18.0.0 vagy újabb) (jelenlegi: v23.4.0)
+- npm (v9.0.0 vagy újabb) (jelenlegi: v11.0.0)
 
 ## Környezeti változók beállítása
 
