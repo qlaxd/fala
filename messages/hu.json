@@ -1,0 +1,29 @@
+{
+  "About": {
+    "title": "Rólunk",
+    "history": {
+      "title": "Történetünk",
+      "timeline": [
+        {
+          "year": "1985",
+          "title": "A Farm Alapítása",
+          "description": "A farmot a Nagy család alapította, minőségi juhtenyésztési céllal."
+        }
+      ]
+    },
+    "location": {
+      "title": "Elhelyezkedés",
+      "description": "Gazdaságunk a Duna-Tisza közén található.",
+      "conditions": [
+        "Kiváló legeltetési feltételek",
+        "Modern állattartási technológia",
+        "Fenntartható gazdálkodás"
+      ]
+    },
+    "whiteSuffolk": {
+      "title": "White Suffolk Tenyésztés",
+      "description": "Prémium minőségű húsjuh tenyésztés",
+      "journey": "Több évtizedes szakmai tapasztalat"
+    }
+  }
+} 
