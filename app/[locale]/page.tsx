@@ -10,12 +10,11 @@ import { HeroCarousel } from '@/components/hero/HeroCarousel';
 
 const heroImages = [
   '/images/hero/hero-1.jpg',
-  '/images/hero/hero-2.jpg',
   '/images/hero/hero-3.jpg',
+  '/images/hero/hero-6.jpg',
   '/images/hero/hero-4.jpg',
   '/images/hero/hero-5.jpg',
-  '/images/hero/hero-6.jpg',
-  '/images/hero/hero-7.jpg'
+  
 ];
 
 export default function HomePage({ params }: { params: { locale: string } }) {

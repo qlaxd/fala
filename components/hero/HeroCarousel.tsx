@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay'
+import React from 'react'
 
 interface HeroCarouselProps {
   images: string[];
@@ -20,23 +21,19 @@ interface HeroCarouselProps {
 }
 
 export function HeroCarousel({ images, title, subtitle, description }: HeroCarouselProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
-
-  useEffect(() => {
-    if (emblaApi) {
-      emblaApi.on('select', () => {
-        // Opcionális: itt kezelheted a képváltás eseményt
-      });
-    }
-  }, [emblaApi]);
+  const plugin = React.useMemo(
+    () => Autoplay({ delay: 5000, stopOnInteraction: false }),
+    []
+  );
 
   return (
     <div className="relative h-screen">
       <Carousel 
         opts={{ loop: true, align: 'start' }}
+        plugins={[plugin]}
         className="w-full h-full"
       >
-        <CarouselContent ref={emblaRef} className="h-full">
+        <CarouselContent className="h-full">
           {images.map((image, index) => (
             <CarouselItem 
               key={index} 
