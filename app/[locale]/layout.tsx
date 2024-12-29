@@ -3,6 +3,8 @@ import { Navigation } from '@/components/layout/Navigation';
 import { isValidLocale } from '@/lib/utils/locale';
 import '../globals.css';
 import { Footer } from '@/components/layout/Footer';
+import { redirect } from 'next/navigation';
+import { type Locale } from '@/lib/constants/locales';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -37,16 +39,16 @@ export default function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: { locale: unknown };
 }) {
-  if (params.locale === 'favicon.ico') {
-    return null;
-  }
+  if (params.locale === 'favicon.ico') return null;
 
   if (!isValidLocale(params.locale)) {
-    throw new Error(`Invalid locale: ${params.locale}`);
+    console.error(`Invalid locale attempted: ${String(params.locale)}`);
+    return redirect('/hu');
   }
-  const locale = params.locale as keyof typeof translations;
+
+  const locale = params.locale as Locale;
   const t = translations[locale];
 
   return (
