@@ -14,7 +14,7 @@ export const partnersTranslations = {
       {
         name: 'Hungarian Sheep and Goat Breeders Association',
         location: 'Budapest, Hungary',
-        description: 'National organization supporting sheep breeding excellence and genetic improvement in Hungary.',
+        description: '',
         website: 'https://mjksz.hu',
         image: '/images/partners/mjksz.svg',
         contribution: 'Certification and breeding program support'
@@ -22,7 +22,7 @@ export const partnersTranslations = {
       {
         name: 'Australian White Suffolk Association',
         location: 'Australia',
-        description: 'Collaborative network of European White Suffolk breeders working together to promote and improve the breed.',
+        description: 'Collaborative association of Australian White Suffolk breeders working together to promote and improve the breed.',
         website: 'https://www.whitesuffolk.com.au/',
         image: '/images/partners/white-suffolk-association-logo.png',
         contribution: 'International cooperation and market development'
@@ -60,7 +60,7 @@ export const partnersTranslations = {
       {
         name: 'Magyar Juh -és Kecsketenyésztő Szövetség',
         location: 'Budapest, Magyarország',
-        description: 'Országos szervezet, amely támogatja a juhtenyésztési kiválóságot és a genetikai fejlesztést Magyarországon.',
+        description: '',
         website: 'https://mjksz.hu',
         image: '/images/partners/mjksz.svg',
         contribution: 'Minősítés és tenyésztési program támogatás'
@@ -68,7 +68,7 @@ export const partnersTranslations = {
       {
         name: 'Ausztráliai White Suffolk Szövetség',
         location: 'Ausztrália',
-        description: 'Európai White Suffolk tenyésztők együttműködési hálózata, akik közösen dolgoznak a fajta népszerűsítésén és fejlesztésén.',
+        description: 'Ausztráliai White Suffolk tenyésztők együttműködési szervezete, akik közösen dolgoznak a fajta népszerűsítésén és fejlesztésén.',
         website: 'https://www.whitesuffolk.com.au/',
         image: '/images/partners/white-suffolk-association-logo.png',
         contribution: 'Nemzetközi együttműködés és piacfejlesztés'
@@ -83,11 +83,19 @@ export const partnersTranslations = {
       },
       {
         name: 'Hunland Trade',
-        location: 'Bugyi, Magyarország',
+        location: 'Magyarország',
         description: 'Magyarország legnagyobb élőállat-kereskedelmi vállalata amely takarmánygyártással is foglalkozik, valamint nemzetközi jelenléttel rendelkezik Csehországban, Szlovákiában, Franciaországban, Szerbiában és Romániában.',
         website: 'https://www.hunland.com',
         image: '/images/partners/hunland-logo.png',
         contribution: 'Állattakarmány és kereskedelmi támogatás.'
+      },
+      {
+        name: 'Serval',
+        location: 'Franciaország',
+        description: 'Tejpótló tápszer gyártó vállalat',
+        website: 'https://www.serval.fr/en/products/',
+        image: '/images/partners/serval.svg',
+        contribution: 'Genetikai állomány biztosítás'
       }
     ]
   }

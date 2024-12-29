@@ -7,7 +7,7 @@ export const homeTranslations = {
     },
     intro: {
       title: 'Our Heritage',
-      content: 'Our family works with sheep since 2004. We started with Merinos at the beginning, then gradually changed to meat sheep, now selling prime lambs and suckers with using concentrated joining and lambing. We have 60 hectare fenced paddocks and another 80-100 hectares where we have them grazing. The grain and haylage are grown on rented infields.',
+      content: 'Our family runs sheep farm since 2004. We started with Merinos at the beginning, then gradually changed to meat sheep. We offer prime lamb and suckers with sept-oct joining, feb-march lambing and apr-may joining with sept-oct lambing. We have 60 hectare fenced paddocks and another 80-100 hectares where we have them grazing. The grain and haylage are grown on rented infields.',
       stats: [
         {
           number: '20+',

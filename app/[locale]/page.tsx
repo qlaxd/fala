@@ -1,13 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { motion } from 'framer-motion';
 import { homeTranslations } from '@/lib/translations/home';
 import { HeroCarousel } from '@/components/hero/HeroCarousel';
-
 const heroImages = [
   '/images/hero/hero-1.jpg',
   '/images/hero/hero-3.jpg',

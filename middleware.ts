@@ -1,68 +1,71 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { defaultLocale, locales } from './i18n.config';
 
-const locales = ['en', 'hu'];
-const defaultLocale = 'en';
+async function getGeoData(ip: string) {
+  // Ha localhost vagy fejlesztői környezet
+  if (ip === 'unknown' || ip === '::1' || ip === '127.0.0.1') {
+    return 'hu'; // Fejlesztés közben legyen magyar
+  }
 
-function isPublicFile(pathname: string) {
-  return (
-    pathname.includes('.') || 
-    pathname.startsWith('/_next') || 
-    pathname.startsWith('/api') ||
-    pathname === '/favicon.ico'
-  );
-}
-
-function getLocaleFromHeader(request: NextRequest): string | undefined {
-  const acceptLanguage = request.headers.get('accept-language');
-  if (!acceptLanguage) return undefined;
-  
-  const languages = acceptLanguage.split(',').map(lang => lang.split(';')[0]);
-  const locale = languages.find(lang => 
-    locales.includes(lang) || locales.includes(lang.split('-')[0])
-  );
-  
-  return locale ? locale.split('-')[0] : undefined;
-}
-
-async function getLocaleFromIP(request: NextRequest): Promise<string | undefined> {
   try {
-    const ip = request.ip || request.headers.get('x-forwarded-for');
-    const response = await fetch(`https://ipapi.co/${ip}/json/`);
-    const data = await response.json();
+    // API kulcs nélküli hívás
+    const response = await fetch(`https://ipapi.co/${ip}/country/`);
+    const countryCode = await response.text();
     
-    return data.country_code === 'HU' ? 'hu' : 'en';
-  } catch {
-    return undefined;
+    // Debug log
+    console.log('IP:', ip);
+    console.log('Detected country code:', countryCode.toLowerCase());
+    
+    return countryCode.toLowerCase();
+  } catch (error) {
+    console.error('Hiba a geolokáció lekérdezésekor:', error);
+    return 'en'; // Hiba esetén angol
   }
 }
+
+const countryToLocale: { [key: string]: string } = {
+  // Csak Magyarország esetén magyar nyelv
+  hu: 'hu',
+  
+  // Minden más esetben angol
+  default: 'en'
+};
 
 export async function middleware(request: NextRequest) {
+  // Kihagyjuk az API útvonalakat és statikus fájlokat
+  if (
+    request.nextUrl.pathname.startsWith('/_next') ||
+    request.nextUrl.pathname.startsWith('/api/') ||
+    request.nextUrl.pathname.includes('.')
+  ) {
+    return;
+  }
+
   const pathname = request.nextUrl.pathname;
   
-  if (isPublicFile(pathname)) {
-    return NextResponse.next();
-  }
-
-  const pathnameIsMissingLocale = locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  // Ha már van nyelvi prefix, nem csinálunk semmit
+  const pathnameHasLocale = locales.some(
+    locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
+  
+  if (pathnameHasLocale) return;
 
-  if (pathnameIsMissingLocale) {
-    const browserLocale = getLocaleFromHeader(request);
-    const geoLocale = await getLocaleFromIP(request);
-    const locale = browserLocale || geoLocale || defaultLocale;
+  // IP cím lekérése
+  const ip = request.ip ?? request.headers.get('x-real-ip');
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  const clientIP = ip || forwardedFor?.split(',')[0] || 'unknown';
 
-    return NextResponse.redirect(
-      new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url)
-    );
-  }
+  // Geolokáció lekérdezése
+  const countryCode = await getGeoData(clientIP);
+  // Csak akkor magyar, ha az IP magyar
+  const locale = countryCode === 'hu' ? 'hu' : 'en';
 
-  return NextResponse.next();
+  // URL módosítása a megfelelő nyelvi prefixszel
+  request.nextUrl.pathname = `/${locale}${pathname}`;
+  return NextResponse.redirect(request.nextUrl);
 }
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)'
-  ],
+  matcher: ['/((?!_next|api|images|.*\\..*).*)']
 };

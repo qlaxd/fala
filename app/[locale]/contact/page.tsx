@@ -81,7 +81,19 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
                   </div>
                   <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-primary" />
-                    <span>{t.contact.phone}</span>
+                    <HoverCard>
+                      <HoverCardTrigger asChild>
+                        <a 
+                          href={`tel:${t.contact.phone}`}
+                          className="text-primary hover:text-primary/80 transition-colors shadow-[0_1px_0_0] shadow-primary/40 hover:shadow-primary/20"
+                        >
+                          {t.contact.phone}
+                        </a>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="w-auto p-2">
+                        <p className="text-sm">Kattintson a hívás kezdeményezéséhez</p>
+                      </HoverCardContent>
+                    </HoverCard>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-primary" />

@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { aboutTranslations } from '@/lib/translations/about';
 import { HeroCarousel } from '@/components/hero/HeroCarousel';
+import { PressSection } from '@/components/about/PressSection';
+import { pressTranslations, pressItems } from '@/lib/translations/press';
+import { type Locale } from '@/lib/constants/locales';
 
 const aboutHeroImages = [
   '/images/about/about-1.jpg',
@@ -11,7 +14,7 @@ const aboutHeroImages = [
   '/images/about/about-3.jpg',
   '/images/about/about-4.jpg'
 ];
-export default function AboutPage({ params }: { params: { locale: string } }) {
+export default function AboutPage({ params }: { params: { locale: Locale } }) {
   const t = aboutTranslations[params.locale as keyof typeof aboutTranslations];
 
   return (
@@ -34,9 +37,9 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-xl font-semibold mb-4">Körülmények</h3>
+                <h3 className="text-xl font-semibold mb-4">{t.location.conditions.title}</h3>
                 <ul className="space-y-3">
-                  {t.location.conditions.map((condition, index) => (
+                  {t.location.conditions.items.map((condition, index) => (
                     <li key={index} className="text-gray-600">{condition}</li>
                   ))}
                 </ul>
@@ -67,6 +70,10 @@ export default function AboutPage({ params }: { params: { locale: string } }) {
           </motion.div>
         </div>
       </section>
+      <PressSection 
+        translations={pressTranslations[params.locale]} 
+        items={pressItems[params.locale]} 
+      />
     </div>
   );
 }

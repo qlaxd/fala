@@ -33,7 +33,7 @@ export const forSaleTranslations = {
     },
     commercial: {
       title: 'Commercial Stock',
-      description: 'Quality commercial lambs for meat production. Our animals are known for excellent growth rates and superior carcass characteristics.',
+      description: 'Quality commercial lambs for export or breeding. Our animals are known for excellent growth rates and superior carcass characteristics.',
       info: {
         lot: 'Lot #',
         lambingDate: 'Lambing Date',
@@ -80,9 +80,9 @@ export const forSaleTranslations = {
     },
     commercial: {
       title: 'Árutermelő Állomány',
-      description: 'Minőségi pecsenyebárányok hústermelésre. Állataink kiváló növekedési ütemükről és kiemelkedő vágási tulajdonságaikról ismertek.',
+      description: 'Minőségi pecsenyebárányok vágásra vagy továbbtartásra. Állataink kiváló növekedési ütemükről és kiemelkedő vágási tulajdonságaikról ismertek.',
       info: {
-        lot: 'Ellés #',
+        lot: 'Tétel #',
         lambingDate: 'Ellés időpontja',
         weight: 'Súly tartomány',
         price: 'Ár/kg',

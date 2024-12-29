@@ -4,12 +4,15 @@ export const aboutTranslations = {
     location: {
       title: 'Our Location',
       description: 'Our farm is located in one of the lands with the worst productivity in Hungary, in the sandy region between the Danube and Tisza rivers. The area faces the highest summer temperatures and lowest annual rainfall in the country, which increasingly challenges both animals and farmers.',
-      conditions: [
-        'Calcareous sandy soil (3-4 AK value)',
-        'Extreme weather conditions',
-        'Extended grazing periods',
-        'Sustainable farming practices'
-      ],
+      conditions: {
+        title: 'Conditions',
+        items: [
+          'Calcareous sandy soil (3-4 AK value)',
+          'Extreme weather conditions',
+          'Extended grazing periods',
+          'Sustainable farming practices'
+        ]
+      },
       quote: {
         text: 'The lowlands of Hungary are mysterious lands, their crows froze in winter, they go mad during the summer. It seems like it\'s not the folks of Asia who came here but it\'s Asia itself who came here with its folks.',
         author: 'István Sinka: Black Herdsman'
@@ -27,12 +30,15 @@ export const aboutTranslations = {
     location: {
       title: 'Elhelyezkedésünk',
       description: 'Gazdaságunk hazánk leggyengébb termőterületén, a Duna-Tisza közi homokhátságon helyezkedik el. Országos átlagban a legnagyobb nyári forrósággal és a legkisebb évi csapadékösszeggel nálunk kell számolni, ami egyre inkább próbára teszi az állatokat és a gazdálkodókat egyaránt.',
-      conditions: [
-        'Meszes homoktalaj (3-4 AK)',
-        'Szélsőséges időjárási körülmények',
-        'Hosszabbított legeltetési időszak',
-        'Fenntartható gazdálkodási gyakorlatok'
-      ],
+      conditions: {
+        title: 'Körülmények',
+        items: [
+          'Meszes homoktalaj (3-4 AK)',
+          'Szélsőséges időjárási körülmények',
+          'Hosszabbított legeltetési időszak',
+          'Fenntartható gazdálkodási gyakorlatok'
+        ]
+      },
       quote: {
         text: 'A magyar síkság rejtelmes föld, télen megfagynak a varjúi, nyáron meg megőrülnek. Mintha nem a népe jött volna Ázsiából hanem maga Ázsia jött volna a népével ide.',
         author: 'Sinka István: Fekete bojtár'
