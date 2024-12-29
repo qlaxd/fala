@@ -9,13 +9,22 @@ A Fala Farm hivatalos weboldala, amely Next.js-ben készült, többnyelvű támo
 - Node.js (v18.0.0 vagy újabb) (jelenlegi: v23.4.0)
 - npm (v9.0.0 vagy újabb) (jelenlegi: v11.0.0)
 
-## Környezeti változók beállítása
+### Környezeti változók
 
-1. Hozzon létre egy `.env.local` fájlt a projekt gyökérkönyvtárában
-2. Adja meg a következő környezeti változókat:
+A következő környezeti változókat kell beállítani a `.env.local` fájlban:
 
-### API Keys
-IPAPI_KEY=your_ipapi_key_here
+- NEXT_PUBLIC_CONTACT_EMAIL=info@falafarm.com
+- NEXT_PUBLIC_CONTACT_PHONE=+36 20 555 5555
+- NEXT_PUBLIC_FACEBOOK_URL=https://www.facebook.com/fala.farm/
+- NEXT_PUBLIC_LINKEDIN_URL=https://www.linkedin.com/in/levente-lajk%C3%B3-818805139/
+
+Az .env.local.example fájlt nevezd át .env.local néven és állítsd be a megfelelő értékeket.
+
+Megjegyzések:
+- A `NEXT_PUBLIC_` prefix azért szükséges, mert ezek az értékek kliens oldalon is elérhetőek kell legyenek
+- A `.env.local` fájlt mindenképp add hozzá a `.gitignore`-hoz
+- Éles környezetben (pl. Vercel) külön kell beállítani ezeket az értékeket a környezeti változók között
+- A fejlesztői környezetben használt `.env.local` fájl nem kerül fel a verziókezelőbe
 
 ### Site Configuration
 NEXT_PUBLIC_SITE_URL=http://localhost:3000

@@ -49,7 +49,7 @@ export function Footer({ locale }: FooterProps) {
             <h3 className="text-white text-lg font-semibold mb-4">Social Media</h3>
             <div className="flex space-x-4">
               <a
-                href="https://www.facebook.com/fala.farm/"
+                href={process.env.NEXT_PUBLIC_FACEBOOK_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors"
@@ -58,7 +58,7 @@ export function Footer({ locale }: FooterProps) {
                 <Facebook className="h-6 w-6" />
               </a>
               <a
-                href="https://www.linkedin.com/in/levente-lajk%C3%B3-818805139/"
+                href={process.env.NEXT_PUBLIC_LINKEDIN_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors"

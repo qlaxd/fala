@@ -16,8 +16,8 @@ export const contactTranslations = {
     contact: {
       title: 'Contact Information',
       address: 'Üllés, Petőfi dűlő 117, 6794',
-      email: 'info@falafarm.hu',
-      phone: '+36 20 555 5555',
+      email: process.env.NEXT_PUBLIC_CONTACT_EMAIL,
+      phone: process.env.NEXT_PUBLIC_CONTACT_PHONE,
       social: {
         facebook: 'Follow us on Facebook',
         linkedin: 'Connect on LinkedIn'
@@ -53,8 +53,8 @@ export const contactTranslations = {
     contact: {
       title: 'Elérhetőségek',
       address: 'Üllés, Petőfi dűlő 117, 6794',
-      email: 'info@falafarm.com',
-      phone: '+36 20 555 5555',
+      email: process.env.NEXT_PUBLIC_CONTACT_EMAIL,
+      phone: process.env.NEXT_PUBLIC_CONTACT_PHONE,
       social: {
         facebook: 'Kövessen minket Facebookon',
         linkedin: 'Kövessen minket LinkedInen'

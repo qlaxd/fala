@@ -1,5 +1,3 @@
-'use client';
-
 import { Inter } from 'next/font/google';
 import { Navigation } from '@/components/layout/Navigation';
 import { isValidLocale } from '@/lib/utils/locale';
@@ -52,7 +50,7 @@ export default function RootLayout({
   const t = translations[locale];
 
   return (
-    <html suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <header className="fixed w-full bg-white shadow-md z-50">
           <Navigation locale={locale} translations={t} />
