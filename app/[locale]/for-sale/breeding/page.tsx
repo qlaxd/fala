@@ -10,8 +10,9 @@ const mockSheep = [
   {
     earTag: 'WS2024001',
     images: [
-      '',
-      '',
+      '/images/hero/hero-1.jpg',
+      '/images/hero/hero-2.jpg',
+      '/images/hero/hero-3.jpg',
     ],
     growthRate: 450,
     yearlyWeight: 120,
