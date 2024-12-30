@@ -1,12 +1,11 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { aboutTranslations } from '@/lib/translations/about';
-import { HeroCarousel } from '@/components/hero/HeroCarousel';
-import { PressSection } from '@/components/about/PressSection';
-import { pressTranslations, pressItems } from '@/lib/translations/press';
-import { type Locale } from '@/lib/constants/locales';
+import { aboutTranslations } from '@/config/i18n/about';
+import { HeroCarousel } from '@/components/features/home/HeroCarousel';
+import { PressSection } from '@/components/features/about/PressSection';
+import { pressTranslations, pressItems } from '@/config/i18n/press';
+import { type Locale } from '@/config/constants/locales';
 
 const aboutHeroImages = [
   '/images/about/about-1.jpg',

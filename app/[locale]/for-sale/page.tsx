@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { forSaleTranslations } from '@/lib/translations/for-sale';
-import type { Locale } from '@/lib/constants/locales';
+import { forSaleTranslations } from '@/config/i18n/for-sale';
+import type { Locale } from '@/config/constants/locales';
 
 export default function ForSalePage({ params }: { params: { locale: Locale } }) {
   const [translations, setTranslations] = useState(forSaleTranslations[params.locale]);

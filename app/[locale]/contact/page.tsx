@@ -2,9 +2,9 @@
 
 import { MapPin, Clock, Phone, Mail, Facebook, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ContactForm } from '@/components/contact/ContactForm';
-import { contactTranslations } from '@/lib/translations/contact';
-import type { Locale } from '@/lib/constants/locales';
+import { ContactForm } from '@/components/features/contact/ContactForm';
+import { contactTranslations } from '@/config/i18n/contact';
+import type { Locale } from '@/config/constants/locales';
 import Image from 'next/image';
 import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
 

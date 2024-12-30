@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { BreedingCard } from '@/components/for-sale/BreedingCard';
-import { forSaleTranslations } from '@/lib/translations/for-sale';
-import type { Locale } from '@/lib/constants/locales';
+import { BreedingCard } from '@/components/features/for-sale/BreedingCard';
+import { forSaleTranslations } from '@/config/i18n/for-sale';
+import type { Locale } from '@/config/constants/locales';
 
 // Mock data - replace with actual data from your backend
 const mockSheep = [

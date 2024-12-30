@@ -3,13 +3,13 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { forSaleTranslations } from '@/lib/translations/for-sale';
-import type { Locale } from '@/lib/constants/locales';
+import { forSaleTranslations } from '@/config/i18n/for-sale';
+import type { Locale } from '@/config/constants/locales';
 
 const mockLambs = [
   {
     id: 1,
-    image: '/images/hero/IMG_20200321_070827.jpg',
+    image: '/images/about/about-4.jpg',
     lambingDate: '2024-02-15',
     weight: '35-40',
     price: '1200',
@@ -39,7 +39,11 @@ export default function CommercialPage({ params }: { params: { locale: Locale } 
                   src={lamb.image}
                   alt="Commercial lamb"
                   fill
-                  className="object-cover"
+                  className="object-cover object-center"
+                  priority={true}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  quality={85}
+                  loading="eager"
                 />
               </div>
               <CardHeader>

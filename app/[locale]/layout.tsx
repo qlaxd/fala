@@ -1,10 +1,10 @@
 import { Inter } from 'next/font/google';
-import { Navigation } from '@/components/layout/Navigation';
-import { isValidLocale } from '@/lib/utils/locale';
+import { Navigation } from '@/components/shared/layout/Navigation';
+import { isValidLocale } from '@/utils/locale';
 import '../globals.css';
-import { Footer } from '@/components/layout/Footer';
+import { Footer } from '@/components/shared/layout/Footer';
 import { redirect } from 'next/navigation';
-import { type Locale } from '@/lib/constants/locales';
+import { type Locale } from '@/config/constants/locales';
 
 const inter = Inter({
   subsets: ['latin'],

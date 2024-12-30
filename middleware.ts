@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { defaultLocale, locales } from './i18n.config';
-import { rateLimit } from './lib/utils/rateLimit';
-import { getFromCache, setToCache } from './lib/utils/geoCache';
+import { rateLimit } from '@/utils/rateLimit';
+import { getFromCache, setToCache } from '@/utils/geoCache';
 
 const limiter = rateLimit({
   interval: 60 * 1000, // 1 perc

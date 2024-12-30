@@ -2,8 +2,8 @@
 
 
 import { motion } from 'framer-motion';
-import { homeTranslations } from '@/lib/translations/home';
-import { HeroCarousel } from '@/components/hero/HeroCarousel';
+import { homeTranslations } from '@/config/i18n/home';
+import { HeroCarousel } from '@/components/features/home/HeroCarousel';
 const heroImages = [
   '/images/hero/hero-1.jpg',
   '/images/hero/hero-3.jpg',
