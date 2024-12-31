@@ -29,10 +29,29 @@ export function ContactForm({ translations: t }: ContactFormProps) {
     setIsSubmitting(true);
 
     try {
-      // Add your form submission logic here
+      const formData = new FormData(e.currentTarget);
+      const data = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        subject: formData.get('subject'),
+        message: formData.get('message'),
+      };
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) throw new Error();
+
       toast({
         title: t.success,
       });
+      
+      (e.target as HTMLFormElement).reset();
     } catch (error) {
       toast({
         title: t.error,
@@ -48,12 +67,14 @@ export function ContactForm({ translations: t }: ContactFormProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Input
           type="text"
+          name="firstName"
           placeholder={t.firstName}
           required
           disabled={isSubmitting}
         />
         <Input
           type="text"
+          name="lastName"
           placeholder={t.lastName}
           required
           disabled={isSubmitting}
@@ -61,22 +82,26 @@ export function ContactForm({ translations: t }: ContactFormProps) {
       </div>
       <Input
         type="email"
+        name='email'
         placeholder={t.email}
         required
         disabled={isSubmitting}
       />
       <Input
         type="tel"
+        name="phone"
         placeholder={t.phone}
         disabled={isSubmitting}
       />
       <Input
         type="text"
+        name='subject'
         placeholder={t.subject}
         required
         disabled={isSubmitting}
       />
       <Textarea
+        name='message'
         placeholder={t.message}
         required
         disabled={isSubmitting}

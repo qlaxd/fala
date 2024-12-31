@@ -7,16 +7,17 @@ import { getFromCache, setToCache } from '@/utils/geoCache';
 const limiter = rateLimit({
   interval: 60 * 1000, // 1 perc
   uniqueTokenPerInterval: 500,
+  max: 5 // Engedélyezett kérés per IP percenként
 });
 
 async function getGeoData(ip: string) {
   try {
-    // Először ellenőrizzük a cache-t
+    // Cache ellenőrzés
     const cachedLocale = getFromCache(ip);
     if (cachedLocale) return cachedLocale;
 
     // Rate limit ellenőrzés
-    await limiter.check(10, ip);
+    await limiter.check(ip);
 
     // Speciális IP címek kezelése
     if (ip === '::1' || ip === '127.0.0.1') {
@@ -42,8 +43,8 @@ async function getGeoData(ip: string) {
     
     const data = await response.json();
     console.log('IP geolocation data:', data);
-    
-    // Ha error vagy reserved IP, akkor is próbáljuk meg meghatározni az országot
+
+    // Hibás vagy fenntartott IP címek kezelése
     if (data.error || data.reserved) {
       const backupResponse = await fetch('http://ip-api.com/json/' + ip);
       if (backupResponse.ok) {
@@ -53,10 +54,10 @@ async function getGeoData(ip: string) {
         return locale;
       }
     }
-    
+
     const locale = data.country_code?.toLowerCase() === 'hu' ? 'hu' : 'en';
     setToCache(ip, locale);
-    
+
     return locale;
   } catch (error: unknown) {
     if (error instanceof Error && error.message === 'Rate limit exceeded') {
@@ -81,12 +82,17 @@ const securityHeaders = {
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-  
+
+  // Skip API routes and static files
+  if (pathname.startsWith('/api/') || pathname.includes('/_next/') || pathname.includes('.')) {
+    return NextResponse.next();
+  }
+
   // Ha már van nyelvi prefix, csak a headereket állítjuk be
   const pathnameHasLocale = locales.some(
     locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
-  
+
   if (pathnameHasLocale) {
     const response = NextResponse.next();
     // Biztonsági headerek hozzáadása
@@ -98,22 +104,31 @@ export async function middleware(request: NextRequest) {
 
   // IP cím megszerzése
   const ip = request.ip ?? request.headers.get('x-forwarded-for') ?? 'unknown';
-  
+
   // Geolokáció lekérdezése
   const locale = await getGeoData(ip);
 
   // URL módosítása a megfelelő nyelvi prefixszel
   request.nextUrl.pathname = `/${locale}${pathname}`;
   const response = NextResponse.redirect(request.nextUrl);
-  
+
   // Biztonsági headerek hozzáadása a redirect válaszhoz is
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
-  
+
   return response;
 }
 
 export const config = {
-  matcher: ['/((?!_next|api|images|.*\\..*).*)']
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)'
+  ]
 };

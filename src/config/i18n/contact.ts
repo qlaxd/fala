@@ -15,7 +15,7 @@ export const contactTranslations = {
     },
     contact: {
       title: 'Contact Information',
-      address: 'Üllés, Petőfi dűlő 117, 6794',
+      address: process.env.NEXT_PUBLIC_CONTACT_ADDRESS,
       email: process.env.NEXT_PUBLIC_CONTACT_EMAIL,
       phone: process.env.NEXT_PUBLIC_CONTACT_PHONE,
       social: {
@@ -52,7 +52,7 @@ export const contactTranslations = {
     },
     contact: {
       title: 'Elérhetőségek',
-      address: 'Üllés, Petőfi dűlő 117, 6794',
+      address: process.env.NEXT_PUBLIC_CONTACT_ADDRESS,
       email: process.env.NEXT_PUBLIC_CONTACT_EMAIL,
       phone: process.env.NEXT_PUBLIC_CONTACT_PHONE,
       social: {

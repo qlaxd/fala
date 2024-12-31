@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Facebook, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import { contactTranslations } from '@/config/i18n/contact';
 import type { Locale } from '@/config/constants/locales';
@@ -54,6 +53,7 @@ export function Footer({ locale }: FooterProps) {
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors"
                 aria-label={t.contact.social.facebook}
+                title={t.contact.social.facebook}
               >
                 <Facebook className="h-6 w-6" />
               </a>
@@ -63,6 +63,7 @@ export function Footer({ locale }: FooterProps) {
                 rel="noopener noreferrer"
                 className="hover:text-primary transition-colors"
                 aria-label={t.contact.social.linkedin}
+                title={t.contact.social.linkedin}
               >
                 <Linkedin className="h-6 w-6" />
               </a>

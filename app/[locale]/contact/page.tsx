@@ -31,7 +31,10 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
         <div className="absolute inset-0">
           <div className="container mx-auto px-4 h-full">
             <div className="flex flex-col items-center justify-center h-full text-white">
-              <h1 className="text-4xl font-bold text-center mb-8">{t.title}</h1>
+              <h1 className="text-4xl font-bold text-center mb-4">{t.title}</h1>
+              <p className="text-lg text-center mb-8 max-w-2xl">
+                {t.description}
+              </p>
               
               <div className="flex justify-center gap-4">
                 <Button
@@ -41,9 +44,10 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
                   className="rounded-full bg-white/10 hover:bg-white/30"
                 >
                   <a
-                    href="https://www.facebook.com/fala.farm/"
+                    href={process.env.NEXT_PUBLIC_FACEBOOK_URL}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={t.contact.social.facebook}
                   >
                     <Facebook className="h-5 w-5" />
                   </a>
@@ -55,9 +59,10 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
                   className="rounded-full bg-white/10 hover:bg-white/30"
                 >
                   <a
-                    href="https://www.linkedin.com/in/levente-lajk%C3%B3-818805139/"
+                    href={process.env.NEXT_PUBLIC_LINKEDIN_URL}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={t.contact.social.linkedin}
                   >
                     <Linkedin className="h-5 w-5" />
                   </a>
@@ -148,7 +153,7 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
           
           <div className="max-w-2xl mx-auto">
             <div className="bg-white p-8 rounded-lg shadow-md">
-              <ContactForm translations={t.form} />
+              <ContactForm translations={t.form}/>
             </div>
           </div>
         </div>

@@ -1,8 +1,8 @@
 import { Inter } from 'next/font/google';
-import { Navigation } from '@/components/shared/layout/Navigation';
+import { Navigation } from '@/components/shared/Navigation';
 import { isValidLocale } from '@/utils/locale';
 import '../globals.css';
-import { Footer } from '@/components/shared/layout/Footer';
+import { Footer } from '@/components/shared/Footer';
 import { redirect } from 'next/navigation';
 import { type Locale } from '@/config/constants/locales';
 
