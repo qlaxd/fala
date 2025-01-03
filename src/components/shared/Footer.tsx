@@ -23,11 +23,23 @@ export function Footer({ locale }: FooterProps) {
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5" />
-                <span>{t.contact.phone}</span>
+                <a 
+                  href={`tel:${process.env.NEXT_PUBLIC_CONTACT_PHONE}`}
+                  className="hover:text-primary transition-colors"
+                  aria-label={t.contact.phone}
+                >
+                  {t.contact.phone}
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5" />
-                <span>{t.contact.email}</span>
+                <a 
+                  href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL}`}
+                  className="hover:text-primary transition-colors"
+                  aria-label={t.contact.email}
+                >
+                  {t.contact.email}
+                </a>
               </div>
             </div>
           </div>
