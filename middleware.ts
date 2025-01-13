@@ -82,12 +82,37 @@ const securityHeaders = {
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
-
-  // Skip API routes and static files
-  if (pathname.startsWith('/api/') || pathname.includes('/_next/') || pathname.includes('.')) {
+  
+  // API és statikus útvonalak teljes kihagyása
+  if (
+    pathname.startsWith('/api/') ||
+    pathname.startsWith('/_next/') ||
+    pathname.includes('.') ||
+    pathname === '/api'
+  ) {
+    console.log('Skipping middleware for API/static route:', pathname);
     return NextResponse.next();
   }
 
+  console.log(`Middleware processing path: ${pathname}, method: ${request.method}, headers: ${request.headers}, body: ${request.body}, request: ${request}, url: ${request.url}, ip: ${request.ip}`);
+
+  // API útvonalak kihagyása előtt
+  console.log(`Potential redirect path: ${request.nextUrl.pathname}`);
+
+  // API útvonalak kihagyása
+  console.log('Request method:', request.method);
+  console.log('Request path:', request.url);
+  console.log('Is API route:', pathname.startsWith('/api/'));
+  console.log('Pathname starts with /api/:', pathname.startsWith('/api/'));
+  console.log('Full condition:', pathname.startsWith('/api/') || request.method === 'POST');
+  
+  if (pathname.startsWith('/api/') || request.method === 'POST') {
+    console.log(`API útvonalak kihagyása: ${pathname.startsWith("/api/") || request.method === "POST"}`);
+    return NextResponse.next();
+  }
+
+  console.log(`API útvonalak kihagyása: ${pathname.startsWith("/api/") || request.method === "POST"}`);
+  
   // Ha már van nyelvi prefix, csak a headereket állítjuk be
   const pathnameHasLocale = locales.some(
     locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
@@ -112,6 +137,19 @@ export async function middleware(request: NextRequest) {
   request.nextUrl.pathname = `/${locale}${pathname}`;
   const response = NextResponse.redirect(request.nextUrl);
 
+  console.log(`Redirecting to: ${request.nextUrl.pathname}`);
+  console.log(`Response: ${response}`);
+  console.log(`Security headers: ${Object.entries(securityHeaders).map(([key, value]) => `${key}: ${value}`).join(', ')}`);
+  console.log(`Locale: ${locale}`);
+  console.log(`IP: ${ip}`);
+  console.log(`Pathname: ${pathname}`);
+  console.log(`Method: ${request.method}`);
+  console.log(`Headers: ${request.headers}`);
+  console.log(`Body: ${request.body}`);
+  console.log(`Request: ${request}`);
+  console.log(`URL: ${request.url}`);
+
+
   // Biztonsági headerek hozzáadása a redirect válaszhoz is
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
@@ -122,13 +160,10 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)'
+    // Skip all internal paths (_next)
+    '/((?!_next|api|static|.*\\..*|favicon.ico).*)',
+    // Optional: Add locale prefix to all pages
+    '/'
   ]
 };
+console.log(`Middleware config: ${config}`);

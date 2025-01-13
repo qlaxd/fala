@@ -3,6 +3,7 @@ export const forSaleTranslations = {
     title: 'Available Stock',
     breeding: {
       title: 'Breeding Stock Auction',
+      earTag: 'Ear tag',
       description: 'Browse our selection of premium White Suffolk breeding stock. Register for upcoming auctions to secure top-quality genetics for your flock.',
       registerButton: 'Register for Auction',
       filters: {
@@ -50,6 +51,7 @@ export const forSaleTranslations = {
     title: 'Eladó Állomány',
     breeding: {
       title: 'Tenyészállat Árverés',
+      earTag: 'Fülszám',
       description: 'Böngéssze prémium White Suffolk tenyészállat kínálatunkat. Regisztráljon a közelgő árverésekre, hogy kiváló genetikát biztosítson állománya számára.',
       registerButton: 'Regisztráció az árverésre',
       filters: {

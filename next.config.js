@@ -16,7 +16,21 @@ const nextConfig = {
   },
   experimental: {
     forceSwcTransforms: true
-  }
+  },
+  //i18n: {
+  //  locales: ['en', 'hu'],
+  //  defaultLocale: 'hu',
+  //  localeDetection: true,
+  //},
+  //async redirects() {
+  //  return [
+  //    {
+  //      source: '/',
+  //      destination: '/hu',
+  //      permanent: true,
+  //    },
+  //  ];
+  //},
 };
 
 module.exports = withNextIntl(nextConfig);

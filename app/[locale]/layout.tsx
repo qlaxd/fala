@@ -5,6 +5,7 @@ import '../globals.css';
 import { Footer } from '@/components/shared/Footer';
 import { redirect } from 'next/navigation';
 import { type Locale } from '@/config/constants/locales';
+import { navigationTranslations } from '@/config/i18n/navigation';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -13,27 +14,6 @@ const inter = Inter({
   fallback: ['system-ui', 'arial']
 });
 
-const translations = {
-  en: {
-    home: 'Home',
-    about: 'About Us',
-    contact: 'Contact',
-    partners: 'Partners',
-    forSale: 'For Sale',
-    breedingStock: 'Breeding Stock',
-    commercialStock: 'Commercial Stock'
-  },
-  hu: {
-    home: 'Főoldal',
-    about: 'Rólunk',
-    contact: 'Kapcsolat',
-    partners: 'Partnerek',
-    forSale: 'Eladó',
-    breedingStock: 'Tenyészállatok',
-    commercialStock: 'Vágóállatok'
-  },
-};
-
 export default function RootLayout({
   children,
   params,
@@ -41,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { locale: unknown };
 }) {
-  if (params.locale === 'favicon.ico') return null;
+  if (params.locale === 'favicon.ico' || params.locale === 'api') return null;
 
   if (!isValidLocale(params.locale)) {
     console.error(`Invalid locale attempted: ${String(params.locale)}`);
@@ -49,7 +29,7 @@ export default function RootLayout({
   }
 
   const locale = params.locale as Locale;
-  const t = translations[locale];
+  const t = navigationTranslations[locale];
 
   return (
     <html lang={locale} suppressHydrationWarning>

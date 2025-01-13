@@ -14,6 +14,7 @@ interface BreedingCardProps {
   birthType: string;
   onRegister: () => void;
   translations: {
+    earTag: string;
     registerButton: string;
     metrics: {
       growthRate: string;
@@ -54,7 +55,7 @@ export function BreedingCard({
   return (
     <Card className="h-full shadow hover:shadow-lg transition-shadow">
       <CardHeader className="p-4">
-        <h3 className="text-lg font-semibold">ID: {earTag}</h3>
+        <h3 className="text-lg font-semibold">{t.earTag}: {earTag}</h3>
       </CardHeader>
       <div className="relative h-64">
         <Image

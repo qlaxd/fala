@@ -38,13 +38,25 @@ export function ContactForm({ translations: t }: ContactFormProps) {
         subject: formData.get('subject'),
         message: formData.get('message'),
       };
+      
+      console.log('Sending request to:', '/api/contact');
+      console.log('Request data:', data);
 
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(data),
       });
 
+      console.log('Response:', response);
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers));
+      const responseData = await response.json();
+      console.log('Response data:', responseData);
+      
       if (!response.ok) throw new Error();
 
       toast({
