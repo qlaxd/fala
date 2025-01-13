@@ -57,7 +57,10 @@ export function ContactForm({ translations: t }: ContactFormProps) {
       const responseData = await response.json();
       console.log('Response data:', responseData);
       
-      if (!response.ok) throw new Error();
+      if (Error || !response.ok) {
+        console.error('Hiba részletek:', responseData);
+        throw new Error(responseData.error || 'Ismeretlen hiba történt');
+      }
 
       toast({
         title: t.success,
