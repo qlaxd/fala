@@ -1,0 +1,175 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  username      String    @unique
+  passwordHash  String
+  role          Role      @default(STAFF)
+  email         String    @unique
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLogin     DateTime?
+  refreshToken  String?
+
+  @@map("users")
+}
+
+model BreedingAnimal {
+  id           String         @id @default(cuid())
+  earTag       String         @unique
+  animalType   String
+  birthType    String
+  growthRate   Int?
+  yearlyWeight Float?
+  lambIndex    Float?
+  weanerGrowth Int?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  isActive     Boolean        @default(true)
+  images       AnimalImage[]
+  auctions     AuctionAnimal[]
+
+  @@map("breeding_animals")
+  @@index([earTag])
+  @@index([animalType])
+  @@index([isActive])
+}
+
+model AnimalImage {
+  id        String         @id @default(cuid())
+  animalId  String
+  animal    BreedingAnimal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  isPrimary Boolean        @default(false)
+  createdAt DateTime       @default(now())
+
+  @@map("animal_images")
+  @@index([animalId])
+}
+
+model CommercialLot {
+  id               String     @id @default(cuid())
+  lotNumber        String
+  lambingDate      DateTime
+  weightMin        Float?
+  weightMax        Float?
+  price            Float?
+  quantity         Int?
+  healthCertificates String[]
+  availabilityDate DateTime?
+  location         String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  isActive         Boolean    @default(true)
+  images           LotImage[]
+
+  @@map("commercial_lots")
+  @@index([lotNumber])
+  @@index([isActive])
+  @@index([availabilityDate])
+}
+
+model LotImage {
+  id        String        @id @default(cuid())
+  lotId     String
+  lot       CommercialLot @relation(fields: [lotId], references: [id], onDelete: Cascade)
+  imageUrl  String
+  isPrimary Boolean       @default(false)
+  createdAt DateTime      @default(now())
+
+  @@map("lot_images")
+  @@index([lotId])
+}
+
+model Auction {
+  id           String               @id @default(cuid())
+  title        String
+  description  String?
+  auctionDate  DateTime
+  location     String?
+  status       AuctionStatus        @default(UPCOMING)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  animals      AuctionAnimal[]
+  registrations AuctionRegistration[]
+
+  @@map("auctions")
+  @@index([status])
+  @@index([auctionDate])
+}
+
+model AuctionAnimal {
+  id           String         @id @default(cuid())
+  auctionId    String
+  auction      Auction        @relation(fields: [auctionId], references: [id], onDelete: Cascade)
+  animalId     String
+  animal       BreedingAnimal @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  startingPrice Float?
+  finalPrice   Float?
+  status       ListingStatus  @default(LISTED)
+  createdAt    DateTime       @default(now())
+
+  @@map("auction_animals")
+  @@index([auctionId])
+  @@index([animalId])
+  @@index([status])
+}
+
+model AuctionRegistration {
+  id              String   @id @default(cuid())
+  auctionId       String
+  auction         Auction  @relation(fields: [auctionId], references: [id], onDelete: Cascade)
+  email           String
+  name            String
+  phone           String?
+  createdAt       DateTime @default(now())
+  notificationSent Boolean  @default(false)
+
+  @@map("auction_registrations")
+  @@index([auctionId])
+  @@index([email])
+  @@index([notificationSent])
+}
+
+model EmailTemplate {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  subject   String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("email_templates")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  STAFF
+}
+
+enum AuctionStatus {
+  UPCOMING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum ListingStatus {
+  LISTED
+  SOLD
+  NOT_SOLD
+}
