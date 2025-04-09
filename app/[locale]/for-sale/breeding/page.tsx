@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, use } from 'react';
 import { BreedingCard } from '@/components/features/for-sale/BreedingCard';
 import { forSaleTranslations } from '@/config/i18n/for-sale';
 import type { Locale } from '@/config/constants/locales';
@@ -21,8 +21,9 @@ const mockSheep = [
   // Add more mock data as needed
 ];
 
-export default function BreedingPage({ params }: { params: { locale: Locale } }) {
-  const t = forSaleTranslations[params.locale];
+export default function BreedingPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const unwrappedParams = use(params);
+  const t = forSaleTranslations[unwrappedParams.locale];
   const [selectedType, setSelectedType] = useState('all');
 
   const handleRegister = () => {

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { forSaleTranslations } from '@/config/i18n/for-sale';
 import type { Locale } from '@/config/constants/locales';
@@ -16,12 +16,13 @@ const mockLambs = [
   },
 ];
 
-export default function CommercialPage({ params }: { params: { locale: Locale } }) {
-  const [translations, setTranslations] = useState(forSaleTranslations[params.locale]);
+export default function CommercialPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const unwrappedParams = use(params);
+  const [translations, setTranslations] = useState(forSaleTranslations[unwrappedParams.locale]);
 
   useEffect(() => {
-    setTranslations(forSaleTranslations[params.locale]);
-  }, [params.locale]);
+    setTranslations(forSaleTranslations[unwrappedParams.locale]);
+  }, [unwrappedParams.locale]);
 
   return (
     <div className="min-h-screen bg-gray-50">

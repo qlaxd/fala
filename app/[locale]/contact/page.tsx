@@ -7,9 +7,11 @@ import { contactTranslations } from '@/config/i18n/contact';
 import type { Locale } from '@/config/constants/locales';
 import Image from 'next/image';
 import { HoverCard, HoverCardTrigger, HoverCardContent } from '@/components/ui/hover-card';
+import { use } from 'react';
 
-export default function ContactPage({ params }: { params: { locale: Locale } }) {
-  const t = contactTranslations[params.locale];
+export default function ContactPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const unwrappedParams = use(params);
+  const t = contactTranslations[unwrappedParams.locale];
 
   return (
     <div className="min-h-screen bg-gray-50">
