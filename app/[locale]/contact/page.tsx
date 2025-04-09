@@ -143,10 +143,11 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
                 src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d11013.680521393786!2d19.7699092!3d46.3610519!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47438295920c9705%3A0x220d4c6fbffd8f1f!2zw5xsbMOpcywgUGV0xZFmaSBkxbFsxZEgMTE3LCA2Nzk0!5e0!3m2!1shu!2shu!4v1735429203226!5m2!1shu!2shu"
                 width="100%"
                 height="100%"
-                style={{ border: 0 }}
+                className="border-0"
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                title="Fala Farm location on map"
               />
             </div>
           </div>
