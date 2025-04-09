@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { CheckCircle, Loader2 } from 'lucide-react';
 
 interface ContactFormProps {
   translations: {
@@ -27,6 +28,12 @@ export function ContactForm({ translations: t }: ContactFormProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Show loading toast
+    const loadingToast = toast({
+      title: 'Küldés folyamatban...',
+      description: <Loader2 className="h-5 w-5 animate-spin text-primary" />,
+    });
 
     try {
       const formData = new FormData(e.currentTarget);
@@ -70,16 +77,27 @@ export function ContactForm({ translations: t }: ContactFormProps) {
         throw new Error(responseData?.error || 'Unknown error occurred');
       }
 
+      // Dismiss loading toast
+      loadingToast.dismiss();
+
+      // Show success toast
       toast({
         title: t.success,
+        variant: 'success',
+        description: <CheckCircle className="h-5 w-5 text-green-600" />,
       });
       
       (e.target as HTMLFormElement).reset();
     } catch (error) {
       console.error('Form submission error:', error);
+      
+      // Dismiss loading toast
+      loadingToast.dismiss();
+      
       toast({
         title: t.error,
         variant: 'destructive',
+        description: <span className="text-sm">Kérjük próbálja újra később.</span>,
       });
     } finally {
       setIsSubmitting(false);
