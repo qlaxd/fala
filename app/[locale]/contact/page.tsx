@@ -145,7 +145,6 @@ export default function ContactPage({ params }: { params: { locale: Locale } }) 
                 height="100%"
                 className="border-0"
                 allowFullScreen
-                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Fala Farm location on map"
               />
