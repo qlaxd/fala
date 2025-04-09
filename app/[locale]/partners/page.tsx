@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { useParams } from 'next/navigation';
 import type { Locale } from '@/config/constants/locales';
 import { partnersTranslations } from '@/config/i18n/partners';
 import type { PartnerCardProps } from '@/components/features/partners/PartnerCard';
@@ -19,8 +20,10 @@ const PartnerCard = dynamic<PartnerCardProps>(() =>
   )
 });
 
-export default function PartnersPage({ params }: { params: { locale: Locale } }) {
-  const t = partnersTranslations[params.locale];
+export default function PartnersPage() {
+  const params = useParams();
+  const locale = params.locale as Locale;
+  const t = partnersTranslations[locale];
 
   return (
     <div className="min-h-screen bg-gray-50">

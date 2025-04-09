@@ -13,8 +13,9 @@ const aboutHeroImages = [
   '/images/about/about-3.jpg',
   '/images/about/about-4.jpg'
 ];
-export default async function AboutPage({ params }: { params: { locale: Locale } }) {
-  const { locale } = await params;
+
+export default function AboutPage({ params }: { params: { locale: Locale } }) {
+  const { locale } = params;
   const t = aboutTranslations[locale as keyof typeof aboutTranslations];
 
   return (

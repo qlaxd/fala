@@ -31,7 +31,7 @@ export const partnersTranslations = {
         name: 'Farrer White Suffolk Stud',
         location: 'New South Wales, Australia',
         description: 'Australian White Suffolk stud providing exceptional genetics for our breeding program.',
-        website: 'https://www.farrerwhitesuffolk.com.au/',
+        website: 'https://www.farrer.nsw.edu.au/our-facilities/agricultural/white-suffolk-stud/',
         image: '/images/partners/black-transparent-suffolk-logo.png',
         contribution: 'Genetic support and breeding program'
       },
@@ -85,7 +85,7 @@ export const partnersTranslations = {
         name: 'Farrer White Suffolk Stud',
         location: 'Új-Dél-Wales, Ausztrália',
         description: 'Ausztráliai White Suffolk tenyészet, amely kiváló genetikai állományt biztosít tenyésztési programunkhoz.',
-        website: 'https://www.farrerwhitesuffolk.com.au/',
+        website: 'https://www.farrer.nsw.edu.au/our-facilities/agricultural/white-suffolk-stud/',
         image: '/images/partners/black-transparent-suffolk-logo.png',
         contribution: 'Genetikai támogatás és tenyésztési program'
       },
