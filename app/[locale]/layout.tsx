@@ -14,31 +14,33 @@ const inter = Inter({
   fallback: ['system-ui', 'arial']
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: { locale: unknown };
 }) {
-  if (params.locale === 'favicon.ico' || params.locale === 'api') return null;
+  const { locale } = await params;
+  
+  if (locale === 'favicon.ico' || locale === 'api') return null;
 
-  if (!isValidLocale(params.locale)) {
-    console.error(`Invalid locale attempted: ${String(params.locale)}`);
+  if (!isValidLocale(locale)) {
+    console.error(`Invalid locale attempted: ${String(locale)}`);
     return redirect('/hu');
   }
 
-  const locale = params.locale as Locale;
-  const t = navigationTranslations[locale];
+  const localeValue = locale as Locale;
+  const t = navigationTranslations[localeValue];
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={localeValue} suppressHydrationWarning>
       <body className={inter.className}>
         <header className="fixed w-full bg-white shadow-md z-50">
-          <Navigation locale={locale} translations={t} />
+          <Navigation locale={localeValue} translations={t} />
         </header>
         <main className="pt-16">{children}</main>
-        <Footer locale={locale} />
+        <Footer locale={localeValue} />
       </body>
     </html>
   );

@@ -13,8 +13,9 @@ const aboutHeroImages = [
   '/images/about/about-3.jpg',
   '/images/about/about-4.jpg'
 ];
-export default function AboutPage({ params }: { params: { locale: Locale } }) {
-  const t = aboutTranslations[params.locale as keyof typeof aboutTranslations];
+export default async function AboutPage({ params }: { params: { locale: Locale } }) {
+  const { locale } = await params;
+  const t = aboutTranslations[locale as keyof typeof aboutTranslations];
 
   return (
     <div className="min-h-screen">
@@ -70,8 +71,8 @@ export default function AboutPage({ params }: { params: { locale: Locale } }) {
         </div>
       </section>
       <PressSection 
-        translations={pressTranslations[params.locale]} 
-        items={pressItems[params.locale]} 
+        translations={pressTranslations[locale]} 
+        items={pressItems[locale]} 
       />
     </div>
   );

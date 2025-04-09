@@ -69,12 +69,14 @@ export function BreedingCard({
             <button
               onClick={prevImage}
               className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 p-1 rounded-full text-white"
+              aria-label="Previous image"
             >
               <ChevronLeft className="h-6 w-6" />
             </button>
             <button
               onClick={nextImage}
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 p-1 rounded-full text-white"
+              aria-label="Next image"
             >
               <ChevronRight className="h-6 w-6" />
             </button>
