@@ -1,14 +1,12 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
+import config from '../utils/config';
 
-// Get environment variables
-const API_URL = __DEV__ 
-  ? process.env.API_URL_DEV 
-  : (process.env.NODE_ENV === 'staging' ? process.env.API_URL_STAGING : process.env.API_URL_PROD);
-
-const AUTH_TOKEN_KEY = process.env.AUTH_TOKEN_KEY || '@FalaFarmAuth:token';
+// Get environment variables from config
+const API_URL = config.API.API_URL;
+const AUTH_TOKEN_KEY = config.AUTH.TOKEN_KEY;
 
 // Create API client instance
 const apiClient: AxiosInstance = axios.create({
@@ -24,7 +22,7 @@ const apiClient: AxiosInstance = axios.create({
 
 // Request interceptor to add auth token
 apiClient.interceptors.request.use(
-  async (config: AxiosRequestConfig) => {
+  async (config: InternalAxiosRequestConfig) => {
     try {
       const token = await AsyncStorage.getItem(AUTH_TOKEN_KEY);
       if (token && config.headers) {
