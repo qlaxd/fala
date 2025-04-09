@@ -94,7 +94,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  console.log(`Middleware processing path: ${pathname}, method: ${request.method}, headers: ${request.headers}, body: ${request.body}, request: ${request}, url: ${request.url}, ip: ${request.ip}`);
+  console.log(`Middleware processing path: ${pathname}, method: ${request.method}, headers: ${request.headers}, body: ${request.body}, request: ${request}, url: ${request.url}`);
 
   // API útvonalak kihagyása előtt
   console.log(`Potential redirect path: ${request.nextUrl.pathname}`);
@@ -128,7 +128,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // IP cím megszerzése
-  const ip = request.ip ?? request.headers.get('x-forwarded-for') ?? 'unknown';
+  const ip = request.headers.get('x-forwarded-for') ?? 'unknown';
 
   // Geolokáció lekérdezése
   const locale = await getGeoData(ip);
