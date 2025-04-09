@@ -39,10 +39,11 @@ export function ContactForm({ translations: t }: ContactFormProps) {
         message: formData.get('message'),
       };
       
-      console.log('Sending request to:', '/api/contact');
-      console.log('Request data:', data);
+      // Use absolute URL to bypass any routing/middleware issues
+      const apiUrl = window.location.origin + '/api/contact';
+      console.log('Sending request to:', apiUrl);
 
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -51,15 +52,22 @@ export function ContactForm({ translations: t }: ContactFormProps) {
         body: JSON.stringify(data),
       });
 
-      console.log('Response:', response);
       console.log('Response status:', response.status);
-      console.log('Response headers:', Object.fromEntries(response.headers));
-      const responseData = await response.json();
-      console.log('Response data:', responseData);
       
-      if (Error || !response.ok) {
-        console.error('Hiba részletek:', responseData);
-        throw new Error(responseData.error || 'Ismeretlen hiba történt');
+      let responseData;
+      const contentType = response.headers.get('content-type');
+      
+      if (contentType && contentType.includes('application/json')) {
+        responseData = await response.json();
+        console.log('Response data:', responseData);
+      } else {
+        const text = await response.text();
+        console.error('Non-JSON response:', text);
+        throw new Error('Server returned invalid response');
+      }
+      
+      if (!response.ok) {
+        throw new Error(responseData?.error || 'Unknown error occurred');
       }
 
       toast({
@@ -68,6 +76,7 @@ export function ContactForm({ translations: t }: ContactFormProps) {
       
       (e.target as HTMLFormElement).reset();
     } catch (error) {
+      console.error('Form submission error:', error);
       toast({
         title: t.error,
         variant: 'destructive',

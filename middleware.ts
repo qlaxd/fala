@@ -10,6 +10,17 @@ const limiter = rateLimit({
   max: 5 // Engedélyezett kérés per IP percenként
 });
 
+// Biztonsági headerek definiálása
+const securityHeaders = {
+  'X-DNS-Prefetch-Control': 'on',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  'X-XSS-Protection': '1; mode=block'
+};
+
 async function getGeoData(ip: string) {
   try {
     // Cache ellenőrzés
@@ -69,101 +80,57 @@ async function getGeoData(ip: string) {
   }
 }
 
-// Biztonsági headerek definiálása
-const securityHeaders = {
-  'X-DNS-Prefetch-Control': 'on',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-  'X-Frame-Options': 'SAMEORIGIN',
-  'X-Content-Type-Options': 'nosniff',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-  'X-XSS-Protection': '1; mode=block'
-};
-
 export async function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+  const { pathname } = request.nextUrl;
   
-  // API és statikus útvonalak teljes kihagyása
+  // Completely skip API routes and non-page routes
   if (
-    pathname.startsWith('/api/') ||
-    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/api') || 
+    pathname.startsWith('/_next') || 
     pathname.includes('.') ||
-    pathname === '/api'
+    request.method !== 'GET'
   ) {
-    console.log('Skipping middleware for API/static route:', pathname);
     return NextResponse.next();
   }
 
-  console.log(`Middleware processing path: ${pathname}, method: ${request.method}, headers: ${request.headers}, body: ${request.body}, request: ${request}, url: ${request.url}`);
-
-  // API útvonalak kihagyása előtt
-  console.log(`Potential redirect path: ${request.nextUrl.pathname}`);
-
-  // API útvonalak kihagyása
-  console.log('Request method:', request.method);
-  console.log('Request path:', request.url);
-  console.log('Is API route:', pathname.startsWith('/api/'));
-  console.log('Pathname starts with /api/:', pathname.startsWith('/api/'));
-  console.log('Full condition:', pathname.startsWith('/api/') || request.method === 'POST');
-  
-  if (pathname.startsWith('/api/') || request.method === 'POST') {
-    console.log(`API útvonalak kihagyása: ${pathname.startsWith("/api/") || request.method === "POST"}`);
-    return NextResponse.next();
-  }
-
-  console.log(`API útvonalak kihagyása: ${pathname.startsWith("/api/") || request.method === "POST"}`);
-  
-  // Ha már van nyelvi prefix, csak a headereket állítjuk be
+  // Check if the pathname already has a locale
   const pathnameHasLocale = locales.some(
     locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
+  // If pathname already has locale, just add security headers
   if (pathnameHasLocale) {
     const response = NextResponse.next();
-    // Biztonsági headerek hozzáadása
     Object.entries(securityHeaders).forEach(([key, value]) => {
       response.headers.set(key, value);
     });
     return response;
   }
 
-  // IP cím megszerzése
-  const ip = request.headers.get('x-forwarded-for') ?? 'unknown';
-
-  // Geolokáció lekérdezése
-  const locale = await getGeoData(ip);
-
-  // URL módosítása a megfelelő nyelvi prefixszel
+  // Otherwise, redirect to locale prefixed path
+  const locale = await getGeoData(request.headers.get('x-forwarded-for') || 'unknown');
+  
   request.nextUrl.pathname = `/${locale}${pathname}`;
   const response = NextResponse.redirect(request.nextUrl);
-
-  console.log(`Redirecting to: ${request.nextUrl.pathname}`);
-  console.log(`Response: ${response}`);
-  console.log(`Security headers: ${Object.entries(securityHeaders).map(([key, value]) => `${key}: ${value}`).join(', ')}`);
-  console.log(`Locale: ${locale}`);
-  console.log(`IP: ${ip}`);
-  console.log(`Pathname: ${pathname}`);
-  console.log(`Method: ${request.method}`);
-  console.log(`Headers: ${request.headers}`);
-  console.log(`Body: ${request.body}`);
-  console.log(`Request: ${request}`);
-  console.log(`URL: ${request.url}`);
-
-
-  // Biztonsági headerek hozzáadása a redirect válaszhoz is
+  
+  // Add security headers
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
-
+  
   return response;
 }
 
+// Explicitly exclude API routes from the matcher
 export const config = {
   matcher: [
-    // Skip all internal paths (_next)
-    '/((?!_next|api|static|.*\\..*|favicon.ico).*)',
-    // Optional: Add locale prefix to all pages
-    '/'
+    /*
+     * Match all request paths except for:
+     * - API routes (/api/.*)
+     * - Static files/assets (images, js, css, etc.)
+     * - Favicon, robots.txt, etc.
+     */
+    '/((?!api|_next|.*\\..*|favicon.ico).*)'
   ]
 };
 console.log(`Middleware config: ${config}`);

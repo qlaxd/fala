@@ -6,6 +6,7 @@ import { Footer } from '@/components/shared/Footer';
 import { redirect } from 'next/navigation';
 import { type Locale } from '@/config/constants/locales';
 import { navigationTranslations } from '@/config/i18n/navigation';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -41,6 +42,7 @@ export default async function RootLayout({
         </header>
         <main className="pt-16">{children}</main>
         <Footer locale={localeValue} />
+        <Toaster />
       </body>
     </html>
   );
