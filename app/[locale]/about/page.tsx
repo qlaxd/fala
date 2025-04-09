@@ -6,6 +6,7 @@ import { HeroCarousel } from '@/components/features/home/HeroCarousel';
 import { PressSection } from '@/components/features/about/PressSection';
 import { pressTranslations, pressItems } from '@/config/i18n/press';
 import { type Locale } from '@/config/constants/locales';
+import { use } from 'react';
 
 const aboutHeroImages = [
   '/images/about/about-1.jpg',
@@ -14,8 +15,9 @@ const aboutHeroImages = [
   '/images/about/about-4.jpg'
 ];
 
-export default function AboutPage({ params }: { params: { locale: Locale } }) {
-  const { locale } = params;
+export default function AboutPage({ params }: { params: Promise<{ locale: Locale }> }) {
+  const unwrappedParams = use(params);
+  const { locale } = unwrappedParams;
   const t = aboutTranslations[locale as keyof typeof aboutTranslations];
 
   return (

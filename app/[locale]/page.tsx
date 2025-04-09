@@ -1,9 +1,10 @@
 'use client';
 
-
 import { motion } from 'framer-motion';
 import { homeTranslations } from '@/config/i18n/home';
 import { HeroCarousel } from '@/components/features/home/HeroCarousel';
+import { use } from 'react';
+
 const heroImages = [
   '/images/hero/hero-1.jpg',
   '/images/hero/hero-3.jpg',
@@ -13,8 +14,9 @@ const heroImages = [
   
 ];
 
-export default function HomePage({ params }: { params: { locale: string } }) {
-  const t = homeTranslations[params.locale as keyof typeof homeTranslations];
+export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const unwrappedParams = use(params);
+  const t = homeTranslations[unwrappedParams.locale as keyof typeof homeTranslations];
 
   return (
     <div className="min-h-screen">
