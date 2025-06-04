@@ -19,11 +19,11 @@ const updateAnimalSchema = z.object({
 // GET handler for fetching a specific breeding animal
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withAuth(request, async () => {
     try {
-      const { id } = params;
+      const { id } = await params;
       
       // Find the animal
       const animal = await prisma.breedingAnimal.findUnique({
@@ -52,11 +52,11 @@ export async function GET(
 // PUT handler for updating a breeding animal
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withAuth(request, async (req) => {
     try {
-      const { id } = params;
+      const { id } = await params;
       const body = await req.json();
       
       // Validate the request body
@@ -87,11 +87,11 @@ export async function PUT(
 // DELETE handler for marking an animal as inactive (soft delete)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withAuth(request, async () => {
     try {
-      const { id } = params;
+      const { id } = await params;
       
       // Check if the animal exists
       const existingAnimal = await prisma.breedingAnimal.findUnique({
@@ -113,4 +113,4 @@ export async function DELETE(
       return handleApiError(error);
     }
   }, ['ADMIN', 'MANAGER']); // Only admin and manager roles can delete animals
-} 
+}

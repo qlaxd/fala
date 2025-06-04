@@ -18,21 +18,19 @@ const updateImageSchema = z.object({
 // POST handler for adding an image to an animal
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   return withAuth(request, async (req) => {
     try {
-      const { id } = params;
       const body = await req.json();
-      
-      // Validate the request body
       const imageData = addImageSchema.parse(body);
       
       // Check if the animal exists
       const existingAnimal = await prisma.breedingAnimal.findUnique({
         where: { id },
       });
-      
+
       if (!existingAnimal) {
         throw new ApiError('NOT_FOUND', 'Breeding animal not found', 404);
       }
@@ -53,7 +51,7 @@ export async function POST(
           isPrimary: imageData.isPrimary ?? false,
         },
       });
-      
+
       return successResponse(image, 201);
     } catch (error) {
       return handleApiError(error);
@@ -64,13 +62,11 @@ export async function POST(
 // GET handler for listing animal images
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   return withAuth(request, async () => {
     try {
-      const { id } = params;
-      
-      // Check if the animal exists
       const existingAnimal = await prisma.breedingAnimal.findUnique({
         where: { id },
       });
@@ -84,10 +80,10 @@ export async function GET(
         where: { animalId: id },
         orderBy: { isPrimary: 'desc' },
       });
-      
+
       return successResponse(images);
     } catch (error) {
       return handleApiError(error);
     }
   });
-} 
+}

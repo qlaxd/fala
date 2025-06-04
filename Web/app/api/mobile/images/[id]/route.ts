@@ -15,11 +15,11 @@ const updateImageSchema = z.object({
 // PUT handler for updating an image (setting as primary)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withAuth(request, async (req) => {
     try {
-      const { id } = params;
+      const { id } = await params;
       const body = await req.json();
       
       // Validate the request body
@@ -62,11 +62,11 @@ export async function PUT(
 // DELETE handler for removing an image
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   return withAuth(request, async () => {
     try {
-      const { id } = params;
+      const { id } = await params;
       
       // Find the image
       const image = await prisma.animalImage.findUnique({
