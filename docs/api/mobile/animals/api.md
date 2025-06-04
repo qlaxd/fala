@@ -88,13 +88,94 @@ Create a new breeding animal.
 
 ---
 
-## Error Handling
+## GET `/api/mobile/animals/[id]`
 
-- Returns standard error responses with appropriate HTTP status codes and error messages.
+Get a specific breeding animal by ID.
+
+### Path Parameters
+- `id` (string): The animal's ID.
+
+### Response
+```json
+{
+  "id": "...",
+  "earTag": "...",
+  "animalType": "...",
+  "birthType": "...",
+  "growthRate": ...,
+  "yearlyWeight": ...,
+  "lambIndex": ...,
+  "weanerGrowth": ...,
+  "isActive": true,
+  "images": [ ... ],
+  "auctions": [ ... ]
+}
+```
+
+#### Errors
+- `404 NOT_FOUND`: Breeding animal not found.
+
+---
+
+## PUT `/api/mobile/animals/[id]`
+
+Update a breeding animal.
+
+### Path Parameters
+- `id` (string): The animal's ID.
+
+### Request Body
+```json
+{
+  "earTag": "string",
+  "animalType": "string",
+  "birthType": "string",
+  "growthRate": 0,
+  "yearlyWeight": 0,
+  "lambIndex": 0,
+  "weanerGrowth": 0,
+  "isActive": true
+}
+```
+- All fields optional; only provided fields will be updated.
+
+### Authorization
+- Roles: `ADMIN`, `MANAGER`
+- Requires JWT authentication
+
+### Response
+- The updated animal object.
+
+#### Errors
+- `404 NOT_FOUND`: Breeding animal not found.
+
+---
+
+## DELETE `/api/mobile/animals/[id]`
+
+Mark a breeding animal as inactive (soft delete).
+
+### Path Parameters
+- `id` (string): The animal's ID.
+
+### Authorization
+- Roles: `ADMIN`, `MANAGER`
+- Requires JWT authentication
+
+### Response
+```json
+{
+  "message": "Animal marked as inactive",
+  "animal": { ... }
+}
+```
+
+#### Errors
+- `404 NOT_FOUND`: Breeding animal not found.
 
 ---
 
 ## Notes
-
 - Only active animals are returned by default.
-- Images array includes only the primary image for each animal.
+- Images array includes only the primary image for each animal in list endpoints.
+- Only admin and manager roles can create, update, or delete animals.
