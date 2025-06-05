@@ -15,7 +15,7 @@ const updateImageSchema = z.object({
   isPrimary: z.boolean(),
 });
 
-// POST handler for adding an image to an animal
+// POST handler for adding an image to a breeding animal
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
