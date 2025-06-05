@@ -17,14 +17,14 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
 
     // This 3 lines should be used for CDN 
-    loader: '',
-    path: '',
-    remotepatterns: [
-      {
-        protocol: 'https',
-        hostname: ''  
-      }
-    ]
+    // loader: '',
+    // path: '',
+    // remotepatterns: [
+    //   {
+    //     protocol: 'https',
+    //     hostname: ''  
+    //   }
+    // ]
   },
   experimental: {
     forceSwcTransforms: true
