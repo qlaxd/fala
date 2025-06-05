@@ -1,6 +1,6 @@
-import { prisma } from '../../../../../src/lib/prisma';
-import { ApiError, handleApiError, successResponse } from '../../../../../src/utils/api-utils';
-import { withAuth } from '../../../../../src/utils/auth-middleware';
+import { prisma } from '../../../../../../src/lib/prisma';
+import { ApiError, handleApiError, successResponse } from '../../../../../../src/utils/api-utils';
+import { withAuth } from '../../../../../../src/utils/auth-middleware';
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
 
