@@ -98,4 +98,4 @@ export const config = {
     '/((?!api|_next|.*\\..*|favicon.ico).*)'
   ]
 };
-console.log(`Middleware config: ${config}`);
+
