@@ -6,10 +6,16 @@ import { z } from 'zod';
 
 // Validation schema for updating a lot
 const updateLotSchema = z.object({
-  name: z.string().min(1).optional(),
-  description: z.string().optional(),
+  lotNumber: z.string().min(1),
+  lambingDate: z.string().datetime(), // ISO string
+  weightMin: z.number().optional(),
+  weightMax: z.number().optional(),
+  price: z.number().optional(),
   quantity: z.number().int().min(1).optional(),
-  // Add other fields as needed from your schema
+  healthCertificates: z.array(z.string()),
+  availabilityDate: z.string().datetime().optional(),
+  location: z.string().optional(),
+  description: z.string().optional(),
 });
 
 // GET: Get a specific commercial lot
